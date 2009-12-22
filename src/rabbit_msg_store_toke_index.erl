@@ -33,6 +33,14 @@
 -export([init/1, lookup/2, insert/2, update/2, update_fields/3, delete/2,
          delete_by_file/2, terminate/1]).
 
+-rabbit_boot_step({rabbit_toke,
+                   [{description, "Tokyo Cabinet for rabbit_msg_store"},
+                    {mfa,         {application, set_env,
+                                   [rabbit, rabbit_msg_store_index_module,
+                                    ?MODULE]}},
+                    {pre,         message_store_queue_sup_queue_recovery}]}).
+
+%% TODO: work out how to share this with the rabbit_msg_store.hrl
 -record(msg_location,
         {msg_id, ref_count, file, offset, total_size}).
 
