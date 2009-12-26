@@ -36,8 +36,7 @@
 -rabbit_boot_step({rabbit_toke,
                    [{description, "Tokyo Cabinet for rabbit_msg_store"},
                     {mfa,         {application, set_env,
-                                   [rabbit, rabbit_msg_store_index_module,
-                                    ?MODULE]}},
+                                   [rabbit, msg_store_index_module, ?MODULE]}},
                     {pre,         message_store_queue_sup_queue_recovery}]}).
 
 %% TODO: work out how to share this with the rabbit_msg_store.hrl
