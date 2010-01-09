@@ -49,8 +49,8 @@ init(Dir) ->
     {ok, Toke} = toke_drv:start_link(),
     ok = toke_drv:new(Toke),
     ok = toke_drv:set_cache(Toke, 1000000),
-    ok = toke_drv:set_df_unit(Toke, 50000),
-    ok = toke_drv:tune(Toke, 2000000, 5, 15, [large]),
+    ok = toke_drv:set_df_unit(Toke, 0),
+    ok = toke_drv:tune(Toke, 40000000, -1, 15, [large]),
     ok = toke_drv:open(Toke, filename:join(Dir, ?FILENAME),
                        [read, write, create, truncate, no_lock]),
     Toke.
