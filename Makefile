@@ -1,5 +1,5 @@
 PACKAGE:=rabbitmq-toke
-DEPS:=rabbitmq-server
+DEPS:=rabbitmq-server rabbitmq-erlang-client
 TOKE_DIR:=toke
 PRIV_DIR:=priv
 
