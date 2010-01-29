@@ -3,6 +3,7 @@ DEPS:=rabbitmq-server rabbitmq-erlang-client
 TOKE_DIR:=toke
 PRIV_DIR:=priv
 EXTRA_TARGETS:=toke_build
+EXTRA_PACKAGE_DIRS:=$(PRIV_DIR)
 
 include ../include.mk
 
