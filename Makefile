@@ -2,6 +2,7 @@ PACKAGE:=rabbitmq-toke
 DEPS:=rabbitmq-server rabbitmq-erlang-client
 TOKE_DIR:=toke
 PRIV_DIR:=priv
+EXTRA_TARGETS:=toke_build
 
 include ../include.mk
 
@@ -19,7 +20,5 @@ toke_build: toke
 	make -C $(TOKE_DIR)
 	cp -r $(TOKE_DIR)/$(EBIN_DIR) .
 	cp -r $(TOKE_DIR)/$(PRIV_DIR) .
-
-$(TARGETS): toke_build
 
 .PHONY: toke_build
