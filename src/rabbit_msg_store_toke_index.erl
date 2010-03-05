@@ -82,14 +82,16 @@ delete(Key, Toke) ->
     ok = toke_drv:delete(Toke, Key).
 
 delete_by_file(File, Toke) ->
-    ok = toke_drv:fold(
-           fun (Key, Obj, ok) ->
-                   #msg_location { file = FileObj } = binary_to_term(Obj),
-                   case FileObj == File of
-                       true  -> toke_drv:delete(Key, Toke);
-                       false -> ok
-                   end
-           end, ok, Toke).
+    DeleteMe = toke_drv:fold(
+                 fun (Key, Obj, Acc) ->
+                         #msg_location { file = FileObj } = binary_to_term(Obj),
+                         case FileObj == File of
+                             true  -> [Key | Acc];
+                             false -> Acc
+                         end
+                 end, [], Toke),
+    [ok = toke_drv:delete(Toke, Key) || Key <- DeleteMe],
+    ok.
 
 terminate(Toke) ->
     ok = toke_drv:close(Toke),
