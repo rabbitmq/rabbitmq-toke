@@ -37,31 +37,35 @@
                    [{description, "Tokyo Cabinet for rabbit_msg_store"},
                     {mfa,         {application, set_env,
                                    [rabbit, msg_store_index_module, ?MODULE]}},
-                    {enables,     message_store_queue_sup_queue_recovery}]}).
+                    {enables,     queue_sup_queue_recovery}]}).
 
--export([init/2, lookup/2, insert/2, update/2, update_fields/3, delete/2,
+-export([new/1, recover/1,
+         lookup/2, insert/2, update/2, update_fields/3, delete/2,
          delete_by_file/2, terminate/1]).
 
 -include_lib("rabbit_common/include/rabbit_msg_store_index.hrl").
 
 -define(FILENAME, "msg_store_toke.tch").
 
-init(Action, Dir) ->
+new(Dir) ->
+    {Toke, Path} = init(Dir),
+    ok = toke_drv:open(Toke, Path, [read, write, create, truncate, no_lock]),
+    Toke.
+
+recover(Dir) ->
+    {Toke, Path} = init(Dir),
+    case toke_drv:open(Toke, Path, [read, write, no_lock]) of
+        ok  -> {ok, Toke};
+        Err -> {error, Err}
+    end.
+
+init(Dir) ->
     {ok, Toke} = toke_drv:start_link(),
     ok = toke_drv:new(Toke),
     ok = toke_drv:set_cache(Toke, 1000000),
     ok = toke_drv:set_df_unit(Toke, 0),
     ok = toke_drv:tune(Toke, 40000000, -1, 15, [large]),
-    init1(Action, filename:join(Dir, ?FILENAME), Toke).
-
-init1(fresh, Path, Toke) ->
-    ok = toke_drv:open(Toke, Path, [read, write, create, truncate, no_lock]),
-    {fresh, Toke};
-init1(recover, Path, Toke) ->
-    case toke_drv:open(Toke, Path, [read, write, no_lock]) of
-        ok  -> {recovered, Toke};
-        Err -> io:format("~p~n", [Err]), init1(fresh, Path, Toke)
-    end.
+    {Toke, filename:join(Dir, ?FILENAME)}.
 
 lookup(Key, Toke) -> %% Key is MsgId which is binary already
     case toke_drv:get(Toke, Key) of
@@ -69,8 +73,8 @@ lookup(Key, Toke) -> %% Key is MsgId which is binary already
         Entry     -> #msg_location {} = binary_to_term(Entry)
     end.
 
-insert(Obj = #msg_location{ msg_id = MsgId }, Toke) ->
-    ok = toke_drv:insert_async(Toke, MsgId, term_to_binary(Obj)).
+insert(Obj = #msg_location { guid = Guid }, Toke) ->
+    ok = toke_drv:insert_async(Toke, Guid, term_to_binary(Obj)).
 
 update(Obj, Toke) ->
     insert(Obj, Toke).
