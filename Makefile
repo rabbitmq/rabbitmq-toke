@@ -15,7 +15,7 @@ update: toke
 	(cd $(TOKE_DIR); hg pull; hg up -C default)
 
 toke:
-	hg clone http://hg.opensource.lshift.net/toke
+	hg clone http://hg.rabbitmq.com/toke
 
 toke_build: toke
 	make -C $(TOKE_DIR)
