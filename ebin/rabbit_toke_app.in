@@ -1,10 +1,9 @@
 {application, rabbit_toke,
  [{description, "Tokyo Cabinet for Erlang in RabbitMQ to do message store index"},
-  {vsn, "0.01"},
+  {vsn, "%%VSN%%"},
   {modules, [
-    rabbit_msg_store_toke_index,
-    toke_drv
+    rabbit_msg_store_toke_index
   ]},
   {registered, []},
   {env, []},
-  {applications, [kernel, stdlib]}]}.
+  {applications, [kernel, stdlib, toke]}]}.
