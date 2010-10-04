@@ -41,7 +41,7 @@
 
 -export([new/1, recover/1,
          lookup/2, insert/2, update/2, update_fields/3, delete/2,
-         delete_by_file/2, terminate/1]).
+         delete_object/2, delete_by_file/2, terminate/1]).
 
 -include_lib("rabbit_common/include/rabbit_msg_store_index.hrl").
 
@@ -91,6 +91,9 @@ update_fields(Key, Updates, Toke) ->
 
 delete(Key, Toke) ->
     ok = toke_drv:delete(Toke, Key).
+
+delete_object(Obj = #msg_location { guid = Guid }, Toke) ->
+    ok = toke_drv:delete_if_value_eq(Toke, Guid, term_to_binary(Obj)).
 
 delete_by_file(File, Toke) ->
     DeleteMe = toke_drv:fold(
