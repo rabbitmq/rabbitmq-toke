@@ -83,11 +83,15 @@ update_fun({Position, NewValue}, ObjAcc) ->
     setelement(Position, ObjAcc, NewValue).
 
 update_fields(Key, Updates, Toke) ->
-    Obj = #msg_location {} = lookup(Key, Toke),
-    ok = insert(case is_list(Updates) of
-                    true  -> lists:foldl(fun update_fun/2, Obj, Updates);
-                    false -> update_fun(Updates, Obj)
-                end, Toke).
+    Fun = fun (ObjBin) ->
+                  Obj = #msg_location {} = binary_to_term(ObjBin),
+                  term_to_binary(
+                    case is_list(Updates) of
+                        true  -> lists:foldl(fun update_fun/2, Obj, Updates);
+                        false -> update_fun(Updates, Obj)
+                    end)
+          end,
+    ok = toke_drv:update_atomically(Toke, Key, Fun).
 
 delete(Key, Toke) ->
     ok = toke_drv:delete(Toke, Key).
