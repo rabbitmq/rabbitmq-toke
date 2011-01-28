@@ -2,6 +2,5 @@
 \.beam$
 ^dist/
 ^deps/
-^build/
-^toke$
-^priv$
+^deps.mk$
+^ebin/rabbit_toke.app$
