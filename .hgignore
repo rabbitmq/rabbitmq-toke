@@ -1,6 +1,5 @@
 ~$
 \.beam$
+^build/
 ^dist/
-^deps/
-^deps.mk$
-^ebin/rabbit_toke.app$
+^cover/
