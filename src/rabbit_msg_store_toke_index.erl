@@ -58,8 +58,8 @@ lookup(Key, Toke) -> %% Key is MsgId which is binary already
         Entry     -> #msg_location {} = binary_to_term(Entry)
     end.
 
-insert(Obj = #msg_location { guid = Guid }, Toke) ->
-    ok = toke_drv:insert_async(Toke, Guid, term_to_binary(Obj)).
+insert(Obj = #msg_location { msg_id = MsgId }, Toke) ->
+    ok = toke_drv:insert_async(Toke, MsgId, term_to_binary(Obj)).
 
 update(Obj, Toke) ->
     insert(Obj, Toke).
@@ -81,8 +81,8 @@ update_fields(Key, Updates, Toke) ->
 delete(Key, Toke) ->
     ok = toke_drv:delete(Toke, Key).
 
-delete_object(Obj = #msg_location { guid = Guid }, Toke) ->
-    ok = toke_drv:delete_if_value_eq(Toke, Guid, term_to_binary(Obj)).
+delete_object(Obj = #msg_location { msg_id = MsgId }, Toke) ->
+    ok = toke_drv:delete_if_value_eq(Toke, MsgId, term_to_binary(Obj)).
 
 delete_by_file(File, Toke) ->
     DeleteMe = toke_drv:fold(
