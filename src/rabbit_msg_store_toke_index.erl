@@ -22,7 +22,7 @@
                    [{description, "Tokyo Cabinet for rabbit_msg_store"},
                     {mfa,         {application, set_env,
                                    [rabbit, msg_store_index_module, ?MODULE]}},
-                    {enables,     queue_sup_queue_recovery}]}).
+                    {enables,     recovery}]}).
 
 -export([new/1, recover/1,
          lookup/2, insert/2, update/2, update_fields/3, delete/2,
