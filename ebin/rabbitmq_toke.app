@@ -1,4 +1,4 @@
-{application, rabbit_toke,
+{application, rabbitmq_toke,
  [{description, "Tokyo Cabinet for Erlang in RabbitMQ to do message store index"},
   {vsn, "%%VSN%%"},
   {modules, [
