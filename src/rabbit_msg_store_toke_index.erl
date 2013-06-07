@@ -18,6 +18,8 @@
 
 -behaviour(rabbit_msg_store_index).
 
+-include_lib("rabbit_common/include/rabbit_msg_store.hrl").
+
 -rabbit_boot_step({rabbit_toke,
                    [{description, "Tokyo Cabinet for rabbit_msg_store"},
                     {mfa,         {application, set_env,
