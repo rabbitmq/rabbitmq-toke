@@ -11,7 +11,7 @@
 %%  The Original Code is RabbitMQ.
 %%
 %%  The Initial Developer of the Original Code is GoPivotal, Inc.
-%%  Copyright (c) 2009-2013 GoPivotal, Inc.  All rights reserved.
+%%  Copyright (c) 2009-2014 GoPivotal, Inc.  All rights reserved.
 %%
 
 -module(rabbit_msg_store_toke_index).
