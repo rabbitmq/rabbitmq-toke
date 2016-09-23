@@ -1,6 +1,6 @@
 PROJECT = rabbitmq_toke
 
-DEPS = rabbit amqp_client toke
+DEPS = rabbit_common rabbit toke
 
 DEP_PLUGINS = rabbit_common/mk/rabbitmq-plugin.mk
 
