@@ -1,4 +1,5 @@
 PROJECT = rabbitmq_toke
+PROJECT_DESCRIPTION = Tokyo Cabinet for Erlang in RabbitMQ to do message store index
 
 DEPS = rabbit_common rabbit toke
 

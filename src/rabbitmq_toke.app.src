@@ -1,7 +1,0 @@
-{application, rabbitmq_toke,
- [{description, "Tokyo Cabinet for Erlang in RabbitMQ to do message store index"},
-  {vsn, ""},
-  {modules, []},
-  {registered, []},
-  {env, []},
-  {applications, [kernel, stdlib, rabbit_common, rabbit, toke]}]}.
