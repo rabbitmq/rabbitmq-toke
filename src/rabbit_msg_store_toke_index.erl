@@ -28,7 +28,7 @@
 
 -export([new/1, recover/1,
          lookup/2, insert/2, update/2, update_fields/3, delete/2,
-         delete_object/2, cleanup_undefined_file/1, terminate/1]).
+         delete_object/2, clean_up_temporary_reference_count_entries_without_file/1, terminate/1]).
 
 -define(FILENAME, "msg_store_toke.tch").
 
@@ -84,7 +84,7 @@ delete(Key, Toke) ->
 delete_object(Obj = #msg_location { msg_id = MsgId }, Toke) ->
     ok = toke_drv:delete_if_value_eq(Toke, MsgId, term_to_binary(Obj)).
 
-cleanup_undefined_file(Toke) ->
+clean_up_temporary_reference_count_entries_without_file(Toke) ->
     DeleteMe = toke_drv:fold(
                  fun (Key, Obj, Acc) ->
                          case (binary_to_term(Obj))#msg_location.file of
