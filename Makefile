@@ -3,6 +3,7 @@ PROJECT_DESCRIPTION = Tokyo Cabinet for Erlang in RabbitMQ to do message store i
 
 DEPS = rabbit_common rabbit toke
 
+DEP_EARLY_PLUGINS = rabbit_common/mk/rabbitmq-early-plugin.mk
 DEP_PLUGINS = rabbit_common/mk/rabbitmq-plugin.mk
 
 # FIXME: Use erlang.mk patched for RabbitMQ, while waiting for PRs to be
